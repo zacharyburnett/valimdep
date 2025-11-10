@@ -1,0 +1,17 @@
+[project]
+name = "valimdep"
+dynamic = ["version"]
+description = "validate explicit imports against project dependencies"
+authors = [{ name = "Zach Burnett", email = "zburnett@stsci.edu" }]
+requires-python = ">=3.14"
+dependencies = ["click", "findimports"]
+
+[project.scripts]
+valimdep = "valimdep.__main__:valimdep"
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
