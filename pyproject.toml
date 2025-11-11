@@ -6,7 +6,7 @@ license-files = ["LICENSE"]
 description = "validate explicit imports against project dependencies"
 authors = [{ name = "Zach Burnett", email = "zburnett@stsci.edu" }]
 requires-python = ">=3.14"
-dependencies = ["click", "findimports"]
+dependencies = ["click"]
 
 [project.scripts]
 valimdep = "valimdep.__main__:valimdep"

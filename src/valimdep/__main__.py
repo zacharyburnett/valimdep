@@ -18,13 +18,13 @@ def valimdep(directories: list[Path]):
 
         if len(unimported_dependencies) > 0:
             click.echo(
-                f"found {len(unimported_dependencies)} package dependencies not explicitly imported [{directory}]\n"
+                f"[{directory.name}] found {len(unimported_dependencies)} package dependencies not explicitly imported\n"
                 + "\n".join(unimported_dependencies)
             )
 
         if len(undepended_imports) > 0:
             click.echo(
-                f" found {len(undepended_imports)} explicit imports not listed in package dependencies [{directory}]\n"
+                f"[{directory.name}] found {len(undepended_imports)} explicit imports not listed in package dependencies\n"
                 + "\n".join(undepended_imports)
             )
 
