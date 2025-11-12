@@ -8,7 +8,10 @@ __all__ = ["dependency_import_discrepancies"]
 
 
 def dependency_import_discrepancies(
-    directory: Path, tests: bool = False
+    directory: Path,
+    ignore: list[str] = [],
+    ignore_paths: list[str] = [],
+    tests_extra: str = None,
 ) -> tuple[list[str], dict[str, list[Path]]]:
     """
     list unimported dependencies (dependencies that are not explicitly imported in the source code)
@@ -18,7 +21,9 @@ def dependency_import_discrepancies(
     """
     filename = directory / "pyproject.toml"
 
-    imported_modules = imports_from(directory, tests=tests)
+    imported_modules = imports_from(
+        directory, ignore=ignore, ignore_paths=ignore_paths, tests=bool(tests_extra)
+    )
 
     depended_modules = []
     with open(filename, "rb") as pyproject_toml:
@@ -27,8 +32,8 @@ def dependency_import_discrepancies(
             constraint = re.compile("[><=@]")
             for dependency in (
                 metadata["project"]["dependencies"]
-                if not tests
-                else metadata["project"]["extras"]["tests"]
+                if not tests_extra
+                else metadata["project"]["optional-dependencies"][tests_extra]
             ):
                 # TODO package names are NOT always the same as importable module names; lookup from PyPI
                 module_name = (
