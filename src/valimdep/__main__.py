@@ -10,8 +10,8 @@ from valimdep.operations import dependency_import_discrepancies
 def valimdep(directories: list[Path]):
     for directory in directories:
         try:
-            unimported_dependencies, undepended_imports = dependency_import_discrepancies(
-                directory
+            unimported_dependencies, undepended_imports = (
+                dependency_import_discrepancies(directory)
             )
         except ValueError:
             continue
@@ -25,7 +25,12 @@ def valimdep(directories: list[Path]):
         if len(undepended_imports) > 0:
             click.echo(
                 f"[{directory.name}] found {len(undepended_imports)} explicit imports not listed in package dependencies\n"
-                + "\n".join(undepended_imports)
+                + "\n".join(
+                    (
+                        f"{undepended_import} {paths}"
+                        for undepended_import, paths in undepended_imports.items()
+                    )
+                )
             )
 
 
