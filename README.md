@@ -1,58 +1,17 @@
 # valimdep
 
 ```shell
-valimdep ../jwst ../romancal ../asdf
+valimdep ../jwst --ignore-path tests --ignore-path docs --ignore-path jwst/regtest --show-import-paths
 ```
 ```
-found 21 package dependencies not explicitly imported [../jwst]
-asdf
-astropy
-BayesicFitting
-crds
+[jwst] found 5 package dependencies not explicitly imported
 drizzle
-gwcs
-numpy
-photutils
 pyparsing
-requests
 scikit_image
-scipy
-spherical_geometry
-stdatamodels
-stcal
-stpipe
-synphot
-tweakwcs
 packaging
 importlib_metadata
-jsonschema
-found 18 package dependencies not explicitly imported [../romancal]
-asdf_astropy
-astropy
-jsonschema
-numpy
-scipy
-requests
-photutils
-pyarrow
-pandas
-roman_datamodels
-asdf
-crds
-drizzle
-gwcs
-stcal
-stpipe
-spherical_geometry
-stsci.imagestats
-found 9 package dependencies not explicitly imported [../asdf]
-asdf_standard
-asdf_transform_schemas
-importlib_metadata
-jmespath
-numpy
-packaging
-pyyaml
-semantic_version
-attrs
+[jwst] found 3 explicit imports not listed in package dependencies
+yaml ['jwst/associations/association_io.py']
+progress ['jwst/lib/progress.py']
+pysiaf ['jwst/lib/siafdb.py']
 ```
