@@ -7,7 +7,8 @@ from valimdep.operations import dependency_import_discrepancies
 
 @click.command()
 @click.argument("directories", nargs=-1, type=Path, default=[Path.cwd()])
-def valimdep(directories: list[Path]):
+@click.option("--paths", type=bool, default=False)
+def valimdep(directories: list[Path], paths: bool = False):
     for directory in directories:
         try:
             unimported_dependencies, undepended_imports = (
@@ -30,6 +31,8 @@ def valimdep(directories: list[Path]):
                         f"{undepended_import} {paths}"
                         for undepended_import, paths in undepended_imports.items()
                     )
+                    if paths
+                    else undepended_imports
                 )
             )
 
