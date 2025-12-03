@@ -1,6 +1,7 @@
 import ast
 from pathlib import Path
 from sys import stdlib_module_names
+from warnings import warn
 
 __all__ = ["imports_from"]
 
@@ -34,11 +35,14 @@ def imports_from(
                         lines = file.read()
 
                     module_names = set()
-                    for node in ast.walk(ast.parse(lines)):
-                        if isinstance(node, ast.Import):
-                            module_names.update((module.name for module in node.names))
-                        elif isinstance(node, ast.ImportFrom) and node.level == 0:
-                            module_names.add(node.module)
+                    try:
+                        for node in ast.walk(ast.parse(lines)):
+                            if isinstance(node, ast.Import):
+                                module_names.update((module.name for module in node.names))
+                            elif isinstance(node, ast.ImportFrom) and node.level == 0:
+                                module_names.add(node.module)
+                    except SyntaxError as error:
+                        warn(f"skipping {filename.relative_to(directory)} due to {error}")
 
                     for module_name in module_names:
                         if module_name is not None:

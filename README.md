@@ -1,4 +1,7 @@
-# valimdep
+# valimdep: VALidate IMports and DEPendencies
+
+Your Python package's dependencies should ONLY be those packages that you EXPLICITLY import and use in your code, and vice versa.
+`valimdep` scans your Python package to find explicit imports, then reads the dependencies defined in your project metadata, and gives you a diff between the two lists.
 
 ```shell
 valimdep ../jwst --ignore-path tests --ignore-path docs --ignore-path jwst/regtest --show-import-paths
